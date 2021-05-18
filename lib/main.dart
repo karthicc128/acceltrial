@@ -14,8 +14,17 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  String status;
+
+  @override
+  void initState() {
+    super.initState();
+    status = "None";
+  }
+
   @override
   Widget build(BuildContext context) {
+    //double flag = 0;
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
@@ -26,11 +35,22 @@ class MyAppState extends State<MyApp> {
               child: Text("Return Values"),
               onPressed: () {
                 userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-                  print(event);
+                  print(status);
+                  //flag = event.y;
+                  if ((event.y) * (event.y) > 1.5) {
+                    status = "MOVING";
+                  } else {
+                    status = "NOT MOVING";
+                  }
+
+                  setState(() {});
                 });
               },
             ),
-            Text("data")
+            Text(
+              status,
+              style: TextStyle(fontSize: 30),
+            )
           ])),
     );
   }
